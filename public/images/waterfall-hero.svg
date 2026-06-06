@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#bff7ea"/>
+      <stop offset=".42" stop-color="#4c9f82"/>
+      <stop offset="1" stop-color="#062722"/>
+    </linearGradient>
+    <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+      <stop stop-color="#f3ffff"/>
+      <stop offset=".55" stop-color="#b9f7ff"/>
+      <stop offset="1" stop-color="#4fd1c5"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#sky)"/>
+  <path d="M0 210 C190 105 310 242 480 132 C650 24 765 192 950 96 C1190 -28 1325 120 1600 40 L1600 1000 L0 1000Z" fill="#176247"/>
+  <path d="M0 355 C190 245 350 390 560 250 C735 132 900 315 1095 190 C1300 58 1440 210 1600 145 L1600 1000 L0 1000Z" fill="#0c4638"/>
+  <path d="M0 505 C250 370 430 528 665 370 C870 235 1035 420 1242 275 C1390 172 1490 252 1600 218 L1600 1000 L0 1000Z" fill="#073331"/>
+  <path d="M738 112 C736 242 700 354 716 480 C730 620 670 720 628 858 L905 858 C862 716 815 616 827 482 C839 348 800 244 795 112Z" fill="url(#water)" opacity=".94"/>
+  <path d="M772 112 C763 270 742 390 756 510 C770 652 735 720 718 858 L840 858 C805 718 795 616 807 494 C818 371 792 268 790 112Z" fill="#ffffff" opacity=".4"/>
+  <path d="M512 845 C690 784 892 785 1078 845 C1016 922 594 922 512 845Z" fill="#55d8d0" opacity=".42"/>
+  <path d="M300 778 C500 728 695 740 855 782 C1052 835 1255 812 1440 760 L1600 1000 L0 1000 L0 825 C92 835 190 815 300 778Z" fill="#06251f"/>
+  <rect width="1600" height="1000" fill="#061a22" opacity=".16"/>
+</svg>

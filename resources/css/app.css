@@ -1,0 +1,202 @@
+@import 'tailwindcss';
+
+@source '../views/**/*.blade.php';
+@source '../../app/**/*.php';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+
+@theme {
+    --font-sans: 'Inter', 'Plus Jakarta Sans', 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+@layer base {
+    body {
+        background: #f7f8fc;
+    }
+
+    ::selection {
+        background: #10b981;
+        color: white;
+    }
+}
+
+@layer components {
+    .app-container {
+        @apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+    }
+
+    .surface-card {
+        @apply rounded-[24px] border border-[#E5EAF2] bg-white shadow-[0_20px_50px_rgba(15,27,45,0.09)];
+    }
+
+    .soft-card {
+        @apply rounded-[20px] border border-[#E5EAF2] bg-white shadow-[0_16px_38px_rgba(15,27,45,0.07)];
+    }
+
+    .btn-primary {
+        @apply inline-flex items-center justify-center gap-2 rounded-[16px] bg-[#007A5A] px-5 py-3 text-sm font-extrabold text-white shadow-[0_16px_26px_rgba(0,122,90,0.25)] transition hover:bg-[#00684d];
+    }
+
+    .btn-secondary {
+        @apply inline-flex items-center justify-center gap-2 rounded-[14px] border border-[#D8E0EA] bg-white px-5 py-3 text-sm font-bold text-[#111827] transition hover:border-[#007A5A] hover:text-[#007A5A];
+    }
+
+    .btn-dark {
+        @apply inline-flex items-center justify-center gap-2 rounded-[16px] bg-[#0F1B2D] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#182943];
+    }
+
+    .btn-danger {
+        @apply inline-flex items-center justify-center gap-2 rounded-[14px] border border-red-300 bg-white px-5 py-3 text-sm font-bold text-red-600 transition hover:bg-red-50;
+    }
+
+    .form-input {
+        @apply w-full rounded-[14px] border border-[#CBD5E1] bg-white px-4 py-3 text-sm text-[#111827] outline-none transition placeholder:text-[#9CA3AF] focus:border-[#007A5A] focus:ring-4 focus:ring-emerald-100;
+    }
+
+    .form-label {
+        @apply mb-2 block text-sm font-bold text-[#374151];
+    }
+
+    .eyebrow {
+        @apply text-xs font-extrabold uppercase tracking-[0.18em] text-[#007A5A];
+    }
+
+    .section-title {
+        @apply text-3xl font-black tracking-tight text-[#111827] md:text-4xl;
+    }
+
+    .muted-text {
+        @apply text-[#6B7280];
+    }
+
+    .dashboard-shell {
+        @apply min-h-screen bg-[#F7F8FC];
+    }
+
+    .dashboard-sidebar {
+        @apply relative bg-[#0F1B2D] text-white;
+    }
+
+    .dashboard-main {
+        @apply px-4 py-6 sm:px-6 lg:px-12 lg:py-12;
+    }
+
+    .dash-nav-link {
+        @apply flex items-center gap-3 rounded-none px-6 py-4 text-sm font-bold text-slate-200 transition hover:bg-white/5 hover:text-white;
+    }
+
+    .dash-nav-link-active {
+        @apply border-l-4 border-[#10B981] bg-[#0B3D3C] text-[#67FFD0];
+    }
+
+    .table-head {
+        @apply bg-[#EEF3FF] text-left text-xs font-black uppercase tracking-[0.08em] text-[#4B5563];
+    }
+
+    .topographic-bg {
+        background-color: #9fb7bf;
+        background-image:
+            linear-gradient(135deg, rgba(255, 255, 255, .28) 25%, transparent 25%),
+            linear-gradient(225deg, rgba(255, 255, 255, .22) 25%, transparent 25%),
+            linear-gradient(45deg, rgba(0, 122, 90, .14) 25%, transparent 25%),
+            linear-gradient(315deg, rgba(0, 122, 90, .12) 25%, #9fb7bf 25%);
+        background-position: 18px 0, 18px 0, 0 0, 0 0;
+        background-size: 36px 36px;
+    }
+}
+
+@layer utilities {
+    .landing-hero {
+        min-height: 100svh;
+        background-image:
+            linear-gradient(180deg, rgba(15, 27, 45, 0.16) 0%, rgba(15, 27, 45, 0.62) 52%, rgba(15, 27, 45, 0.82) 100%),
+            url('/assets/images/hero-waterfall.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+
+    .auth-image-panel {
+        background-image:
+            linear-gradient(180deg, rgba(15, 27, 45, 0.08) 0%, rgba(0, 122, 90, 0.78) 100%),
+            url('/assets/images/login-waterfall.jpg');
+        background-size: cover;
+        background-position: center;
+    }
+
+    .premium-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        overflow: hidden;
+    }
+
+    .premium-table thead {
+        background: #EEF3FF;
+        color: #4B5563;
+        font-size: 12px;
+        font-weight: 900;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+    }
+
+    .premium-table th,
+    .premium-table td {
+        padding: 20px 24px;
+        text-align: left;
+        vertical-align: middle;
+    }
+
+    .premium-table tbody tr + tr td {
+        border-top: 1px solid #E5EAF2;
+    }
+
+    .premium-table tbody tr {
+        background: #fff;
+    }
+
+    .avatar-initial {
+        display: inline-flex;
+        height: 42px;
+        width: 42px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        background: #DDFBF0;
+        color: #007A5A;
+        font-size: 13px;
+        font-weight: 900;
+        flex-shrink: 0;
+    }
+
+    .hero-soft-blue {
+        background: #EAF0FF;
+    }
+
+    @media (max-width: 767px) {
+        .landing-hero {
+            background-position: center top;
+        }
+
+        .surface-card,
+        .soft-card {
+            border-radius: 20px;
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .dashboard-sidebar {
+            position: fixed;
+            inset: 0 auto 0 0;
+            width: 280px;
+            min-height: 100vh;
+            overflow-y: auto;
+            box-shadow: 20px 0 50px rgba(15, 27, 45, .08);
+            z-index: 30;
+        }
+
+        .dashboard-main {
+            margin-left: 280px;
+            min-height: 100vh;
+        }
+    }
+}
