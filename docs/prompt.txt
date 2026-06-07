@@ -994,10 +994,7 @@ Laporkan:
 * Migration ditambahkan
 * Env yang harus diisi
 * Cara test Midtrans sandbox
-* Cara test webhook dengan ngrok
 * Flow test lengkap dari pilih paket sampai e-ticket
 sendanggiletiukeleptravel@gmail.com
 Senaru#Eco26!
 https://dashboard.sandbox.midtrans.com/dashboard
-https://dashboard.ngrok.com/get-started/setup/windows
-.\ngrok.exe config add-authtoken 3Ee31U5mERFcO3EB34XmfXEoXcD_7UkKtMfvgBR3kHaBy3svx
