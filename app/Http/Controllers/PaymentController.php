@@ -11,6 +11,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 class PaymentController extends Controller
@@ -55,6 +56,12 @@ class PaymentController extends Controller
 
             return response()->json(['message' => 'Notification processed.']);
         } catch (\Throwable $exception) {
+            Log::error('Gagal process webhook Midtrans.', [
+                'order_id' => $request->input('order_id'),
+                'transaction_status' => $request->input('transaction_status'),
+                'exception' => $exception->getMessage(),
+            ]);
+
             return response()->json(['message' => $exception->getMessage()], 400);
         }
     }

@@ -68,11 +68,11 @@
             </div>
 
             <aside class="flex flex-col items-center justify-center rounded-[24px] border-2 border-dashed border-emerald-200 bg-emerald-50 p-6 text-center">
-                <div class="flex h-28 w-28 items-center justify-center rounded-[24px] bg-white text-[#007A5A] shadow-[0_16px_32px_rgba(15,27,45,.08)]">
-                    <x-icon name="ticket" class="h-14 w-14" />
+                <div data-testid="ticket-qr" class="rounded-[18px] bg-white p-3 shadow-[0_16px_32px_rgba(15,27,45,.08)] [&_svg]:h-44 [&_svg]:w-44">
+                    {!! $booking->ticket->qrSvg(176) !!}
                 </div>
-                <p class="mt-5 text-xs font-black uppercase tracking-[0.16em] text-[#007A5A]">QR Optional</p>
-                <p class="mt-2 text-sm leading-6 text-[#6B7280]">Kode tiket digunakan sebagai voucher check-in.</p>
+                <p class="mt-5 text-xs font-black uppercase tracking-[0.16em] text-[#007A5A]">QR Ticket</p>
+                <p class="mt-2 text-sm leading-6 text-[#6B7280]">{{ $booking->ticket->ticket_code }}</p>
             </aside>
         </div>
     </div>
