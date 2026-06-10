@@ -142,7 +142,7 @@
         </div>
         <a href="{{ route('gallery') }}" class="text-sm font-black text-[#007A5A] hover:text-[#005f46]">Lihat Semua Galeri -></a>
     </div>
-    <div class="grid auto-rows-[180px] gap-5 md:grid-cols-4">
+    <div class="gallery-grid grid auto-rows-[180px] gap-5 md:grid-cols-4">
         @foreach($galleryFallbacks as $index => $fallback)
             <img src="{{ asset($fallback) }}" alt="Galeri destinasi {{ $index + 1 }}" loading="lazy" decoding="async" class="{{ $index === 0 ? 'md:row-span-2' : '' }} {{ $index === 1 ? 'md:col-span-2' : '' }} {{ $index === 4 ? 'md:col-span-2' : '' }} h-full w-full rounded-[22px] object-cover shadow-[0_16px_32px_rgba(15,27,45,.08)]">
         @endforeach
@@ -155,7 +155,7 @@
         <div class="mx-auto mt-3 h-1 w-20 rounded-full bg-[#007A5A]"></div>
         <div class="mt-12 grid gap-6 lg:grid-cols-3">
             @forelse($reviews as $review)
-                <article class="surface-card p-7">
+                <article class="review-card surface-card p-7">
                     <x-rating-stars :rating="$review->rating" />
                     <p class="mt-5 text-sm leading-7 text-[#4B5563]">"{{ $review->comment }}"</p>
                     <div class="mt-6 flex items-center gap-3">
@@ -168,7 +168,7 @@
                 </article>
             @empty
                 @foreach(['Andi Natalia', 'James Miller', 'Bambang Prasetyo'] as $name)
-                    <article class="surface-card p-7">
+                    <article class="review-card surface-card p-7">
                         <x-rating-stars rating="5" />
                         <p class="mt-5 text-sm leading-7 text-[#4B5563]">"Pengalaman trekking yang luar biasa. Air terjun sangat segar dan pemandangannya benar-benar indah."</p>
                         <div class="mt-6 flex items-center gap-3">

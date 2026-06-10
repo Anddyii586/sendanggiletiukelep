@@ -20,7 +20,7 @@
         <p class="mt-4 text-sm leading-7 text-[#6B7280]">Dokumentasi suasana air terjun, jalur hutan, dan panorama Senaru.</p>
     </div>
 
-    <div class="mt-12 grid auto-rows-[220px] gap-5 md:grid-cols-4">
+    <div class="gallery-grid mt-12 grid auto-rows-[220px] gap-5 md:grid-cols-4">
         @forelse($galleries as $gallery)
             @php
                 $fallback = $fallbacks[$loop->index % count($fallbacks)];

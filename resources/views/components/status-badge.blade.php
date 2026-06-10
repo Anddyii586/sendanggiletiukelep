@@ -21,6 +21,6 @@
     [$label, $classes] = $map[$status] ?? [str_replace('_', ' ', ucfirst($status)), 'bg-slate-100 text-slate-700 ring-slate-200'];
 @endphp
 
-<span {{ $attributes->merge(['class' => "inline-flex items-center rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-wide ring-1 {$classes}"]) }}>
+<span {{ $attributes->merge(['class' => "status-badge inline-flex items-center rounded-full px-3 py-1 text-[11px] font-black uppercase tracking-wide ring-1 {$classes}"]) }}>
     {{ $label }}
 </span>

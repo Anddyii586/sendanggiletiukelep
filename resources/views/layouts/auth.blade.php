@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Auth') - Sendang Gile</title>
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen bg-[#F7F8FC] text-[#111827] antialiased">
     <main class="grid min-h-screen lg:grid-cols-[1.08fr_.92fr]">
@@ -23,7 +23,7 @@
         </section>
 
         <section class="flex min-h-screen items-center justify-center px-5 py-10 sm:px-8">
-            <div class="w-full max-w-[520px]">
+            <div class="auth-card w-full max-w-[520px]">
                 <a href="{{ route('home') }}" class="mb-10 flex items-center gap-2 text-lg font-black text-[#007A5A] lg:hidden">
                     <x-icon name="droplet" class="h-6 w-6" /> Sendang Gile & Tiu Kelep
                 </a>

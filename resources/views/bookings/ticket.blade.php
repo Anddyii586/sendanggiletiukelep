@@ -13,7 +13,7 @@
         <button onclick="window.print()" class="btn-primary" type="button"><x-icon name="receipt" class="h-5 w-5" /> Print</button>
     </div>
 
-    <div class="mx-auto max-w-4xl overflow-hidden rounded-[28px] border border-[#E5EAF2] bg-white shadow-[0_24px_55px_rgba(15,27,45,.12)] print:shadow-none">
+    <div class="ticket-card mx-auto max-w-4xl overflow-hidden rounded-[28px] border border-[#E5EAF2] bg-white shadow-[0_24px_55px_rgba(15,27,45,.12)] print:shadow-none">
         <div class="bg-[#0F1B2D] p-8 text-white sm:p-10">
             <div class="flex flex-wrap items-start justify-between gap-5">
                 <div>

@@ -75,7 +75,7 @@
             <h2 class="section-title">Galeri Destinasi</h2>
             <p class="mt-4 text-sm leading-7 text-[#6B7280]">Setiap sudut di Sendang Gile dan Tiu Kelep adalah keajaiban alam yang siap untuk diabadikan.</p>
         </div>
-        <div class="mt-12 grid auto-rows-[190px] gap-5 md:grid-cols-6">
+        <div class="gallery-grid mt-12 grid auto-rows-[190px] gap-5 md:grid-cols-6">
             <img src="{{ asset('assets/images/gallery-1.jpg') }}" alt="Galeri air terjun" loading="lazy" decoding="async" class="h-full w-full rounded-[18px] object-cover md:col-span-3 md:row-span-2">
             <img src="{{ asset('assets/images/gallery-2.jpg') }}" alt="Jalur hutan Senaru" loading="lazy" decoding="async" class="h-full w-full rounded-[18px] object-cover md:col-span-2">
             <img src="{{ asset('assets/images/gallery-3.jpg') }}" alt="Air terjun tinggi" loading="lazy" decoding="async" class="h-full w-full rounded-[18px] object-cover md:col-span-1 md:row-span-2">
