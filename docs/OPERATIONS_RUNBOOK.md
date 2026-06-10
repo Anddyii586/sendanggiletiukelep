@@ -95,7 +95,18 @@ Catatan:
 - Jangan upload log ke tiket publik jika berisi payload sensitif.
 - Masking `MIDTRANS_SERVER_KEY`, password, dan token sebelum membagikan log.
 
-## E. Database Backup and Restore
+## E. Gallery Cloudinary Checks
+
+Saat upload atau gambar galeri bermasalah:
+
+- Cek `.env` production berisi `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`, atau `CLOUDINARY_URL`.
+- Cek `php artisan config:clear` lalu `php artisan config:cache` setelah perubahan credential.
+- Test upload ulang dari `/admin/galleries`.
+- Cek tabel `galleries`: record Cloudinary baru harus punya `cloudinary_secure_url`, `cloudinary_public_id`, dan `storage_disk=cloudinary`.
+- Jika gambar lama masih memakai `image_path` lokal, pastikan `php artisan storage:link` masih ada untuk fallback local storage.
+- Jika delete/update gagal menghapus asset lama, cek log Laravel untuk `Cloudinary image delete failed` dan hapus asset manual dari Cloudinary Console bila perlu.
+
+## F. Database Backup and Restore
 
 Backup database:
 
@@ -115,7 +126,7 @@ Praktik aman:
 - Simpan backup di lokasi non-public.
 - Uji restore secara berkala di staging.
 
-## F. Emergency Action
+## G. Emergency Action
 
 Aktifkan maintenance mode:
 

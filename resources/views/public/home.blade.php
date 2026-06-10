@@ -143,9 +143,14 @@
         <a href="{{ route('gallery') }}" class="text-sm font-black text-[#007A5A] hover:text-[#005f46]">Lihat Semua Galeri -></a>
     </div>
     <div class="gallery-grid grid auto-rows-[180px] gap-5 md:grid-cols-4">
-        @foreach($galleryFallbacks as $index => $fallback)
-            <img src="{{ asset($fallback) }}" alt="Galeri destinasi {{ $index + 1 }}" loading="lazy" decoding="async" class="{{ $index === 0 ? 'md:row-span-2' : '' }} {{ $index === 1 ? 'md:col-span-2' : '' }} {{ $index === 4 ? 'md:col-span-2' : '' }} h-full w-full rounded-[22px] object-cover shadow-[0_16px_32px_rgba(15,27,45,.08)]">
-        @endforeach
+        @forelse($galleries as $gallery)
+            @php $index = $loop->index; @endphp
+            <img src="{{ $gallery->image_url }}" alt="{{ $gallery->title }}" loading="lazy" decoding="async" class="{{ $index === 0 ? 'md:row-span-2' : '' }} {{ $index === 1 ? 'md:col-span-2' : '' }} {{ $index === 4 ? 'md:col-span-2' : '' }} h-full w-full rounded-[22px] object-cover shadow-[0_16px_32px_rgba(15,27,45,.08)]">
+        @empty
+            @foreach($galleryFallbacks as $index => $fallback)
+                <img src="{{ asset($fallback) }}" alt="Galeri destinasi {{ $index + 1 }}" loading="lazy" decoding="async" class="{{ $index === 0 ? 'md:row-span-2' : '' }} {{ $index === 1 ? 'md:col-span-2' : '' }} {{ $index === 4 ? 'md:col-span-2' : '' }} h-full w-full rounded-[22px] object-cover shadow-[0_16px_32px_rgba(15,27,45,.08)]">
+            @endforeach
+        @endforelse
     </div>
 </section>
 

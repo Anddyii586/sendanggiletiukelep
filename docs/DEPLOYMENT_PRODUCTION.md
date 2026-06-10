@@ -108,7 +108,33 @@ Checklist Midtrans:
 - Jangan memakai ngrok untuk production.
 - Jangan mencampur key sandbox dengan mode production.
 
-## G. Admin Setup
+## G. Cloudinary Gallery Media Setup
+
+Cloudinary dipakai untuk media konten galeri yang di-upload dari admin. Local storage tetap dapat dipakai untuk file lain dan fallback data lama.
+
+Langkah setup:
+
+- Buat akun Cloudinary.
+- Ambil `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, dan `CLOUDINARY_API_SECRET` dari Cloudinary Console.
+- Isi credential tersebut di `.env` production, atau isi `CLOUDINARY_URL` saja.
+- Jangan commit credential Cloudinary ke repository.
+- Jalankan `php artisan config:cache` ulang setelah `.env` production diubah.
+- Test upload foto dari `/admin/galleries`.
+
+Format `CLOUDINARY_URL` jika memilih satu variable:
+
+```text
+cloudinary://<api_key>:<api_secret>@<cloud_name>
+```
+
+Jika gambar galeri tidak muncul:
+
+- Cek credential Cloudinary di `.env`.
+- Cek koneksi network hosting ke Cloudinary.
+- Cek kolom `cloudinary_secure_url` dan `cloudinary_public_id` pada tabel `galleries`.
+- Cek log Laravel untuk error upload/delete Cloudinary.
+
+## H. Admin Setup
 
 Seeder demo hanya ditujukan untuk `local` dan `testing`. Untuk production, buat admin manual:
 
@@ -125,7 +151,7 @@ Setelah deploy:
 - Ubah password admin jika pernah dibuat untuk testing.
 - Hapus atau disable data demo jika tidak diperlukan.
 
-## H. Smoke Test After Deploy
+## I. Smoke Test After Deploy
 
 Jalankan checklist manual:
 
@@ -141,10 +167,11 @@ Jalankan checklist manual:
 - Export CSV rapi.
 - User management terbuka.
 - Audit logs tercatat setelah aksi admin.
+- Admin gallery upload berhasil dan gambar tampil di halaman public gallery.
 
 Detail checklist tersedia di `docs/PRODUCTION_SMOKE_TEST.md`.
 
-## I. Rollback Guidance
+## J. Rollback Guidance
 
 Sebelum deploy:
 

@@ -10,6 +10,9 @@ Gunakan checklist ini sebelum membuka akses production.
 - [ ] Database credential kuat dan tidak dibagikan.
 - [ ] Midtrans key tidak dipublish di Git, log, issue tracker, atau frontend.
 - [ ] Midtrans sandbox/production key sesuai dengan `MIDTRANS_IS_PRODUCTION`.
+- [ ] Cloudinary credential tidak dipublish di Git, log, issue tracker, atau frontend.
+- [ ] `CLOUDINARY_URL` jika dipakai memakai format `cloudinary://<api_key>:<api_secret>@<cloud_name>` dan hanya ada di `.env` server.
+- [ ] Upload galeri admin hanya menerima image `jpg`, `jpeg`, `png`, atau `webp` dengan batas ukuran yang ditentukan.
 - [ ] Webhook signature validation aktif.
 - [ ] Webhook amount validation aktif.
 - [ ] Admin route diproteksi `auth` dan `role:admin`.

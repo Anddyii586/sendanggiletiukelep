@@ -22,14 +22,8 @@
 
     <div class="gallery-grid mt-12 grid auto-rows-[220px] gap-5 md:grid-cols-4">
         @forelse($galleries as $gallery)
-            @php
-                $fallback = $fallbacks[$loop->index % count($fallbacks)];
-                $imageUrl = $gallery->image_path && !\Illuminate\Support\Str::startsWith($gallery->image_path, ['http://', 'https://'])
-                    ? \Illuminate\Support\Facades\Storage::url($gallery->image_path)
-                    : asset($fallback);
-            @endphp
             <article class="{{ $loop->first ? 'md:col-span-2 md:row-span-2' : '' }} overflow-hidden rounded-[22px] bg-white shadow-[0_18px_38px_rgba(15,27,45,.08)]">
-                <img src="{{ $imageUrl }}" alt="{{ $gallery->title }}" loading="lazy" decoding="async" class="h-full w-full object-cover">
+                <img src="{{ $gallery->image_url }}" alt="{{ $gallery->title }}" loading="lazy" decoding="async" class="h-full w-full object-cover">
             </article>
         @empty
             @foreach($fallbacks as $fallback)

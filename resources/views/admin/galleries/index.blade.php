@@ -14,13 +14,8 @@
 
     <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
         @forelse($galleries as $gallery)
-            @php
-                $imageUrl = $gallery->image_path && !\Illuminate\Support\Str::startsWith($gallery->image_path, ['http://', 'https://'])
-                    ? \Illuminate\Support\Facades\Storage::url($gallery->image_path)
-                    : asset('assets/images/gallery-1.jpg');
-            @endphp
             <article class="surface-card overflow-hidden">
-                <img src="{{ $imageUrl }}" alt="{{ $gallery->title }}" loading="lazy" decoding="async" class="h-60 w-full object-cover">
+                <img src="{{ $gallery->image_url }}" alt="{{ $gallery->title }}" loading="lazy" decoding="async" class="h-60 w-full object-cover">
                 <div class="p-6">
                     <div class="flex items-start justify-between gap-3">
                         <div>
