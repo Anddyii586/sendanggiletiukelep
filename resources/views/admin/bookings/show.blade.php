@@ -17,12 +17,12 @@
     </div>
 
     <div class="surface-card overflow-hidden">
-        <div class="flex flex-wrap items-center justify-between gap-4 bg-[#EEF3FF] p-6">
+        <div class="flex flex-wrap items-start justify-between gap-4 bg-[#EEF3FF] p-6">
             <div>
                 <p class="text-sm font-bold text-[#6B7280]">Order ID</p>
                 <p class="mt-1 text-xl font-black">{{ $booking->payment?->order_id ?? '-' }}</p>
             </div>
-            <div class="flex flex-wrap gap-3">
+            <div class="flex flex-wrap items-start gap-3">
                 @if($booking->status === \App\Models\Booking::STATUS_CONFIRMED)
                     <form method="POST" action="{{ route('admin.bookings.complete', $booking) }}">
                         @csrf
@@ -31,10 +31,18 @@
                     </form>
                 @endif
                 @unless($booking->status === \App\Models\Booking::STATUS_COMPLETED)
-                    <form method="POST" action="{{ route('admin.bookings.cancel', $booking) }}">
+                    <form method="POST" action="{{ route('admin.bookings.cancel', $booking) }}" class="w-full max-w-md rounded-[18px] border border-red-200 bg-white p-4">
                         @csrf
                         @method('PATCH')
-                        <button class="btn-danger" type="submit">Cancel Booking</button>
+                        <label for="cancelled_reason" class="form-label">Alasan pembatalan</label>
+                        <textarea id="cancelled_reason" name="cancelled_reason" rows="3" required minlength="5" class="form-input" placeholder="Tulis alasan minimal 5 karakter">{{ old('cancelled_reason') }}</textarea>
+                        @error('cancelled_reason')
+                            <p class="mt-2 text-sm font-bold text-red-600">{{ $message }}</p>
+                        @enderror
+                        @if($booking->payment?->status === \App\Models\Payment::STATUS_PAID)
+                            <p class="mt-3 rounded-[14px] bg-amber-50 p-3 text-xs font-bold leading-5 text-amber-700">Payment sudah paid. Refund belum otomatis dan perlu diproses manual di luar sistem.</p>
+                        @endif
+                        <button class="btn-danger mt-4 w-full" type="submit">Cancel Booking</button>
                     </form>
                 @endunless
             </div>
@@ -64,6 +72,18 @@
                         <div class="mt-5 rounded-[18px] bg-[#F7F8FC] p-5">
                             <p class="text-sm font-bold text-[#6B7280]">Catatan</p>
                             <p class="mt-2 text-sm leading-7 text-[#4B5563]">{{ $booking->notes }}</p>
+                        </div>
+                    @endif
+                    @if($booking->cancelled_reason)
+                        <div class="mt-5 rounded-[18px] bg-red-50 p-5">
+                            <p class="text-sm font-bold text-red-700">Cancellation Reason</p>
+                            <p class="mt-2 text-sm leading-7 text-red-700">{{ $booking->cancelled_reason }}</p>
+                            <p class="mt-3 text-xs font-bold text-red-600">
+                                {{ optional($booking->cancelled_at)->format('d M Y H:i') ?? '-' }}
+                                @if($booking->cancelledBy)
+                                    oleh {{ $booking->cancelledBy->name }}
+                                @endif
+                            </p>
                         </div>
                     @endif
                 </div>

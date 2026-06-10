@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\SiteSetting;
+use App\Services\AdminAuditLogService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -18,17 +19,37 @@ class AdminSiteSettingController extends Controller
         ]);
     }
 
-    public function update(Request $request): RedirectResponse
+    public function update(Request $request, AdminAuditLogService $auditLog): RedirectResponse
     {
         $validated = $request->validate(
             collect($this->fields())
                 ->mapWithKeys(fn (string $label, string $key) => [$key => ['nullable', 'string', 'max:2000']])
                 ->all()
         );
+        $previousValues = SiteSetting::query()
+            ->whereIn('key', array_keys($validated))
+            ->pluck('value', 'key');
 
         foreach ($validated as $key => $value) {
             SiteSetting::updateOrCreate(['key' => $key], ['value' => $value]);
         }
+
+        $changedKeys = collect($validated)
+            ->filter(fn ($value, string $key): bool => ($previousValues[$key] ?? null) !== $value)
+            ->keys()
+            ->values()
+            ->all();
+
+        $auditLog->log(
+            $request->user(),
+            'site_settings.updated',
+            null,
+            'Site settings diperbarui.',
+            [
+                'keys' => array_keys($validated),
+                'changed_keys' => $changedKeys,
+            ]
+        );
 
         return back()->with('success', 'Site settings berhasil diperbarui.');
     }

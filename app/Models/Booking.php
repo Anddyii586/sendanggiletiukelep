@@ -46,6 +46,9 @@ class Booking extends Model
         'status',
         'notes',
         'expires_at',
+        'cancelled_reason',
+        'cancelled_at',
+        'cancelled_by',
     ];
 
     protected function casts(): array
@@ -57,12 +60,18 @@ class Booking extends Model
             'service_fee' => 'decimal:2',
             'total_price' => 'decimal:2',
             'expires_at' => 'datetime',
+            'cancelled_at' => 'datetime',
         ];
     }
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function cancelledBy(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'cancelled_by');
     }
 
     public function service(): BelongsTo

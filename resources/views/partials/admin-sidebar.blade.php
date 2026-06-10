@@ -17,6 +17,15 @@
         <a href="{{ route('admin.bookings.index') }}" class="dash-nav-link {{ request()->routeIs('admin.bookings.*') ? 'dash-nav-link-active' : '' }}">
             <x-icon name="calendar" class="h-5 w-5" /> Booking
         </a>
+        <a href="{{ route('admin.payments.index') }}" class="dash-nav-link {{ request()->routeIs('admin.payments.*') ? 'dash-nav-link-active' : '' }}">
+            <x-icon name="receipt" class="h-5 w-5" /> Payments
+        </a>
+        <a href="{{ route('admin.reports.transactions') }}" class="dash-nav-link {{ request()->routeIs('admin.reports.*') ? 'dash-nav-link-active' : '' }}">
+            <x-icon name="history" class="h-5 w-5" /> Reports
+        </a>
+        <a href="{{ route('admin.users.index') }}" class="dash-nav-link {{ request()->routeIs('admin.users.*') ? 'dash-nav-link-active' : '' }}">
+            <x-icon name="user" class="h-5 w-5" /> Users
+        </a>
         <a href="{{ route('admin.galleries.index') }}" class="dash-nav-link {{ request()->routeIs('admin.galleries.*') ? 'dash-nav-link-active' : '' }}">
             <x-icon name="camera" class="h-5 w-5" /> Galeri
         </a>

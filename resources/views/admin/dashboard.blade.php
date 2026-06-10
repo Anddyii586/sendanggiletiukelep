@@ -24,6 +24,12 @@
             ['Completed', $totalCompleted, 'ticket', 'text-teal-600'],
             ['Cancelled', $totalCancelled, 'x', 'text-red-600'],
             ['Revenue Paid', 'Rp '.number_format($totalRevenuePaid, 0, ',', '.'), 'receipt', 'text-[#007A5A]'],
+            ['Pending Payments', $pendingPayments, 'clock', 'text-orange-600'],
+            ['Paid Payments', $paidPayments, 'check', 'text-[#007A5A]'],
+            ['Expired Bookings', $expiredBookings, 'x', 'text-slate-600'],
+            ['Today Bookings', $todayBookings, 'calendar', 'text-sky-600'],
+            ['Upcoming Visits', $upcomingVisits, 'map-pin', 'text-teal-600'],
+            ['Total Reviews', $totalReviews, 'star', 'text-amber-600'],
         ] as [$label, $value, $icon, $color])
             <article class="surface-card p-6">
                 <x-icon :name="$icon" class="h-7 w-7 {{ $color }}" />
@@ -79,11 +85,11 @@
 
         <section class="surface-card overflow-hidden">
             <div class="p-7">
-                <h2 class="text-2xl font-black">Recent Payments</h2>
-                <p class="mt-2 text-sm text-[#6B7280]">Status transaksi dari Midtrans.</p>
+                <h2 class="text-2xl font-black">Recent Paid Payments</h2>
+                <p class="mt-2 text-sm text-[#6B7280]">Transaksi terbaru yang sudah paid.</p>
             </div>
             <div class="space-y-4 border-t border-[#E5EAF2] p-5">
-                @forelse($recentPayments as $payment)
+                @forelse($recentPaidPayments as $payment)
                     <a href="{{ route('admin.bookings.show', $payment->booking) }}" class="flex items-center gap-4 rounded-[16px] border border-[#E5EAF2] bg-[#F7F8FC] p-4 transition hover:border-[#007A5A]">
                         <div class="flex h-12 w-12 items-center justify-center rounded-[14px] bg-emerald-50 text-[#007A5A]"><x-icon name="receipt" class="h-6 w-6" /></div>
                         <div class="min-w-0 flex-1">
@@ -93,11 +99,77 @@
                         <x-status-badge :status="$payment->status" />
                     </a>
                 @empty
-                    <p class="rounded-[16px] bg-[#F7F8FC] p-4 text-sm text-[#6B7280]">Belum ada payment record.</p>
+                    <p class="rounded-[16px] bg-[#F7F8FC] p-4 text-sm text-[#6B7280]">Belum ada paid payment.</p>
                 @endforelse
             </div>
             <div class="bg-[#EEF3FF] p-5">
-                <a href="{{ route('admin.bookings.index', ['status' => 'waiting_payment']) }}" class="btn-dark w-full">Lihat Waiting Payment</a>
+                <a href="{{ route('admin.payments.index', ['status' => 'paid']) }}" class="btn-dark w-full">Lihat Payment Monitoring</a>
+            </div>
+        </section>
+    </div>
+
+    <div class="mt-10 grid gap-6 xl:grid-cols-2">
+        <section class="surface-card overflow-hidden">
+            <div class="p-7">
+                <h2 class="text-2xl font-black">Recent Payment Logs Error/Invalid</h2>
+                <p class="mt-1 text-sm text-[#6B7280]">Log webhook dengan signature invalid atau error message.</p>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="premium-table text-sm">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Transaction</th>
+                            <th>Valid</th>
+                            <th>Error</th>
+                            <th>Processed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($recentPaymentIssues as $log)
+                            <tr>
+                                <td class="font-black">{{ $log->order_id ?? '-' }}</td>
+                                <td>{{ $log->transaction_status ?? '-' }}</td>
+                                <td>{{ $log->signature_valid ? 'Yes' : 'No' }}</td>
+                                <td class="max-w-[260px] truncate">{{ $log->error_message ?? '-' }}</td>
+                                <td>{{ optional($log->processed_at)->format('d M Y H:i') ?? $log->created_at->format('d M Y H:i') }}</td>
+                            </tr>
+                        @empty
+                            <tr><td class="py-8 text-[#6B7280]" colspan="5">Tidak ada payment log error/invalid.</td></tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="surface-card overflow-hidden">
+            <div class="p-7">
+                <h2 class="text-2xl font-black">Recent Admin Audit Logs</h2>
+                <p class="mt-1 text-sm text-[#6B7280]">Aktivitas admin operasional terbaru.</p>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="premium-table text-sm">
+                    <thead>
+                        <tr>
+                            <th>Admin</th>
+                            <th>Action</th>
+                            <th>Description</th>
+                            <th>Created</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse($recentAuditLogs as $log)
+                            <tr>
+                                <td class="font-black">{{ $log->admin?->name ?? '-' }}</td>
+                                <td>{{ $log->action }}</td>
+                                <td class="max-w-[300px] truncate">{{ $log->description ?? '-' }}</td>
+                                <td>{{ $log->created_at->format('d M Y H:i') }}</td>
+                            </tr>
+                        @empty
+                            <tr><td class="py-8 text-[#6B7280]" colspan="4">Belum ada audit log.</td></tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
         </section>
     </div>
@@ -114,7 +186,7 @@
                         <form method="POST" action="{{ route('admin.bookings.complete', $preview) }}">@csrf @method('PATCH')<button class="btn-dark" type="submit">Mark Completed</button></form>
                     @endif
                     @unless($preview->status === \App\Models\Booking::STATUS_COMPLETED)
-                        <form method="POST" action="{{ route('admin.bookings.cancel', $preview) }}">@csrf @method('PATCH')<button class="btn-danger" type="submit">Cancel Booking</button></form>
+                        <a href="{{ route('admin.bookings.show', $preview) }}" class="btn-danger">Cancel di Detail</a>
                     @endunless
                 </div>
             </div>
