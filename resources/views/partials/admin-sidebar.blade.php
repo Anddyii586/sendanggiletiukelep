@@ -1,4 +1,21 @@
-<aside class="dashboard-sidebar">
+<aside id="admin-sidebar" class="dashboard-sidebar lg:[transform:translateX(0)]" aria-label="Admin navigation" data-admin-sidebar>
+    <div class="flex items-center justify-between border-b border-white/10 px-5 py-4 lg:hidden">
+        <div>
+            <p class="text-xs font-black uppercase tracking-[0.16em] text-[#67FFD0]">Menu Admin</p>
+            <p class="mt-1 text-sm font-bold text-slate-200">Waterfalls Management</p>
+        </div>
+        <button
+            type="button"
+            class="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white ring-1 ring-white/15 transition hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#67FFD0]"
+            aria-label="Tutup menu admin"
+            data-admin-menu-close
+        >
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true">
+                <path d="M6 6l12 12M18 6 6 18" />
+            </svg>
+        </button>
+    </div>
+
     <div class="px-6 py-8 text-center">
         <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-full border-2 border-[#10B981] bg-[#DDFBF0] text-2xl font-black text-[#007A5A]">
             {{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}
@@ -7,7 +24,7 @@
         <p class="text-sm font-semibold text-slate-300">Waterfalls Management</p>
     </div>
 
-    <nav class="flex gap-2 overflow-x-auto px-3 pb-4 lg:block lg:px-0">
+    <nav class="grid gap-1 px-3 pb-5 lg:block lg:px-0">
         <a href="{{ route('admin.dashboard') }}" class="dash-nav-link {{ request()->routeIs('admin.dashboard') ? 'dash-nav-link-active' : '' }}">
             <x-icon name="home" class="h-5 w-5" /> Dashboard
         </a>
