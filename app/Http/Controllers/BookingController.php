@@ -40,48 +40,50 @@ class BookingController extends Controller
         ]);
     }
 
-    public function store(StoreBookingRequest $request): RedirectResponse
-    {
-        $service = Service::active()->findOrFail($request->integer('package_id'));
-        $participantCount = $request->integer('participant_count');
+public function store(StoreBookingRequest $request): RedirectResponse
+{
+    dd('MASUK STORE', $request->all());
 
-        $booking = DB::transaction(function () use ($request, $service, $participantCount): Booking {
-            $subtotal = $service->pricing_type === 'per_trip'
-                ? (float) $service->price
-                : (float) $service->price * $participantCount;
-            $serviceFee = 0;
+    $service = Service::active()->findOrFail($request->integer('package_id'));
+    $participantCount = $request->integer('participant_count');
 
-            $booking = Booking::create([
-                'booking_code' => $this->generateBookingCode(),
-                'user_id' => $request->user()->id,
-                'service_id' => $service->id,
-                'visit_date' => $request->input('visit_date'),
-                'participant_count' => $participantCount,
-                'contact_name' => $request->input('contact_name'),
-                'contact_phone' => $request->input('contact_phone'),
-                'contact_email' => $request->input('contact_email'),
-                'subtotal' => $subtotal,
-                'service_fee' => $serviceFee,
-                'total_price' => $subtotal + $serviceFee,
-                'status' => Booking::STATUS_WAITING_PAYMENT,
-                'notes' => $request->input('notes'),
-                'expires_at' => now()->addDay(),
-            ]);
+    $booking = DB::transaction(function () use ($request, $service, $participantCount): Booking {
+        $subtotal = $service->pricing_type === 'per_trip'
+            ? (float) $service->price
+            : (float) $service->price * $participantCount;
+        $serviceFee = 0;
 
-            $booking->payment()->create([
-                'order_id' => 'ORDER-'.$booking->booking_code,
-                'gross_amount' => $booking->total_price,
-                'status' => Payment::STATUS_UNPAID,
-                'expired_at' => $booking->expires_at,
-            ]);
+        $booking = Booking::create([
+            'booking_code' => $this->generateBookingCode(),
+            'user_id' => $request->user()->id,
+            'service_id' => $service->id,
+            'visit_date' => $request->input('visit_date'),
+            'participant_count' => $participantCount,
+            'contact_name' => $request->input('contact_name'),
+            'contact_phone' => $request->input('contact_phone'),
+            'contact_email' => $request->input('contact_email'),
+            'subtotal' => $subtotal,
+            'service_fee' => $serviceFee,
+            'total_price' => $subtotal + $serviceFee,
+            'status' => Booking::STATUS_WAITING_PAYMENT,
+            'notes' => $request->input('notes'),
+            'expires_at' => now()->addDay(),
+        ]);
 
-            return $booking;
-        });
+        $booking->payment()->create([
+            'order_id' => 'ORDER-'.$booking->booking_code,
+            'gross_amount' => $booking->total_price,
+            'status' => Payment::STATUS_UNPAID,
+            'expired_at' => $booking->expires_at,
+        ]);
 
-        return redirect()
-            ->route('bookings.checkout', $booking)
-            ->with('success', 'Booking berhasil dibuat. Silakan lanjutkan pembayaran.');
-    }
+        return $booking;
+    });
+
+    return redirect()
+        ->route('bookings.checkout', $booking)
+        ->with('success', 'Booking berhasil dibuat. Silakan lanjutkan pembayaran.');
+}
 
     public function checkout(Booking $booking): View
     {
