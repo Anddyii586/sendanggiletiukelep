@@ -43,9 +43,7 @@ Route::middleware(['auth', 'role:user'])->group(function (): void {
     Route::get('/dashboard', fn () => redirect()->route('my-bookings.index'))->name('dashboard');
     Route::redirect('/bookings', '/my-bookings')->name('bookings.index');
     Route::get('/bookings/create', [BookingController::class, 'create'])->name('bookings.create');
-    //Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
-    Route::post('/bookings', function () {
-    dd('POST BOOKINGS MASUK');
+    Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
 })->name('bookings.store');
     Route::get('/bookings/{booking}/checkout', [BookingController::class, 'checkout'])->name('bookings.checkout');
     Route::post('/bookings/{booking}/pay', [BookingController::class, 'pay'])->name('bookings.pay');
@@ -55,7 +53,6 @@ Route::middleware(['auth', 'role:user'])->group(function (): void {
     Route::get('/my-bookings/{booking}/ticket', [BookingController::class, 'ticket'])->name('my-bookings.ticket');
     Route::get('/my-bookings/{booking}/review', [ReviewController::class, 'create'])->name('reviews.create');
     Route::post('/my-bookings/{booking}/review', [ReviewController::class, 'store'])->name('reviews.store');
-});
 
 Route::middleware(['auth', 'role:admin'])
     ->prefix('admin')
