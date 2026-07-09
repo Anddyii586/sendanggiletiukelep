@@ -24,10 +24,11 @@
             </div>
             <div class="flex flex-wrap items-start gap-3">
                 @if($booking->status === \App\Models\Booking::STATUS_CONFIRMED)
-                    <form method="POST" action="{{ route('admin.bookings.complete', $booking) }}">
+                    <form method="POST" action="{{ route('admin.bookings.complete', $booking) }}"
+                    onsubmit="return confirm('Yakin ingin menyelesaikan booking ini?')">
                         @csrf
                         @method('PATCH')
-                        <button class="btn-dark" type="submit">Mark Completed</button>
+                        <button class="btn-primary" type="submit">✅ Tandai Booking Selesai</button>
                     </form>
                 @endif
                 @unless($booking->status === \App\Models\Booking::STATUS_COMPLETED)
